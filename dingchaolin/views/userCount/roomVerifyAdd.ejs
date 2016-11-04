@@ -1,0 +1,170 @@
+<% include ../navigation %>
+<div class="ch-container" xmlns="http://www.w3.org/1999/html">
+    <% include ../sidebar %>
+    <div id="content" class="col-lg-10 col-sm-10">
+        <div>
+            <ul class="breadcrumb">
+                <li><a href="/">主页</a></li>
+                <li><a href="/platform/addmarketingQQv">添加受限房间</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="box col-md-12">
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2><i class="glyphicon glyphicon-edit"></i>房间信息</h2>
+                    </div>
+                    <% if (error) { %>
+                    <div class="center alert alert-danger">
+                        <div><span class="ng-binding ng-scope"><%= error %></span></div>
+                    </div>
+                    <% } %>
+                    <% if (success) { %>
+                    <div class="center alert alert-success">
+                        <div><span class="ng-binding ng-scope"><%= success %></span></div>
+                    </div>
+                    <% } %>
+                    <div class="box-content">
+                        <form id="regioninfo" class="form-horizontal" role="form" method="post" action="/platform/roomVerifyAddPost"  enctype="multipart/form-data">
+                            <fieldset>
+                                <br />
+                                <div class="center col-md-10" style="position: relative;">
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark red"></i> 房间名称：</span>
+                                        <input type="text" class="c_chatroom_name form-control" id="c_chatroom_name" name="c_chatroom_name" >
+                                    </div><br />
+                                    <div class="suggest"  id="search-suggest" style="display:none; position: absolute; ;z-index: 10;border: 0; left:129px; top:34px; text-align:left;">
+                                        <ul class="search_results" id="search_results">
+                                        </ul >
+                                    </div>
+                                    <input type="hidden" name="c_hash" id="c_hash">
+                                    <p class="center col-md-5">
+                                        <input type="submit" id="subAjax" class="btn btn-md btn-primary"  value="提 交" />
+                                        <!--<span class="btn btn-md btn-primary overview">预 览</span>-->
+                                    </p>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .broadcast{
+        width: 337px;
+        height: 216px;
+        border:1px solid #c9cbca;
+        border-radius: 4px;
+        background:#fff;
+        z-index: 5;
+        clear: both;
+        box-shadow: 0 0 10px 2px rgba(0,0,0,.05);
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        display: none;
+    }
+    .broad-head{
+        height: 35px;
+        line-height: 35px;
+        clear: both;
+        background:#0a5495;
+    }
+    .broad-head span{
+        background:url(/img/broadcast/close-icon.png) no-repeat;
+        width: 12px;
+        height: 13px;
+        display: block;
+        float: right;
+        cursor: pointer;
+        margin: 10px 10px 0 0;
+    }
+    .broad-head h3{
+        width: 120px;
+        color: #fff;
+        float: left;
+        font-size: 14px;
+        line-height: 0;
+    }
+    .broad-head h3 b{
+        background:url(/img/broadcast/logo.png) no-repeat;
+        width: 19px;
+        height: 17px;
+        display: block;
+        float:left;
+        margin: -9px 8px 0 10px;
+    }
+    .broad-detail{
+        border-bottom: 1px solid #e5e5e5;
+        height: 122px;
+    }
+    .broad-detail h2{
+        text-align: center;
+        font-size: 18px;
+    }
+    .broad-detail p{
+        margin: 10px auto 0;
+        line-height: 20px;
+        text-indent: 22px;
+        width: 295px;
+        height: 78px;
+        word-wrap:break-word;
+        overflow: hidden;
+    }
+    .check-datails{
+        margin: 14px 15px 0 0;
+        float: right;
+    }
+
+    .big{
+        position:absolute;
+        top:0;
+        background:#000;
+        opacity:0.5;
+        left:0;
+        z-index  :2;
+    }
+    .marketingText{
+        height: 316px !important;
+    }
+</style>
+<script style="javascript/text" >
+    $('#c_chatroom_name').bind('keyup',function() {
+        var jqueryInput = $(this);
+        var searchText = jqueryInput.val();
+        var html = "";
+        $.get('/platform/queryFactory?k=' + searchText, function (result) {
+            console.log(result);
+            if(!!result){
+                for(var i =0 ; i < result.queryList.length;i++){
+                    html +='<li class="liList" value="'+result.queryList[i].c_hash+'">'+result.queryList[i].c_chatroom_name+'</li>'
+                }
+                $('#search_results').html(html);
+                $('#search-suggest').show();
+            }
+        })
+    })
+    $(document).on('click', function(){
+        $('#search-suggest').hide();
+    })
+    //点击取值
+    $(document).delegate('.liList','click',function(){
+        a = $(this).text();
+        console.log(a);
+        c_hash =  $(this).attr("value");
+        $('#c_chatroom_name').val(a);
+        $('#c_hash').val(c_hash);
+    })
+    $("#subAjax").click(function(){
+        if($('.search_results li').attr("value")){
+            alert('搜索出房间名称，请点击下拉列表之后提交');
+            return true;
+        }else {
+            alert('搜索出房间名称，请点击下拉列表之后提交');
+            alert('没有此房间，请重新输入');
+            return false;
+        }
+    });
+</script>

@@ -1,0 +1,68 @@
+<% include ../navigation %>
+<div class="ch-container">
+    <% include ../sidebar %>
+    <div id="content" class="col-lg-10 col-sm-10">
+        <div>
+            <ul class="breadcrumb">
+                <li><a href="/">主页</a></li>
+                <li><a href="#">配置版本URL</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="box col-md-12">
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2><i class="glyphicon glyphicon-edit"></i>配置版本URL</h2>
+                    </div>
+                    <% if (error) { %>
+                    <div class="center alert alert-danger">
+                        <div><span class="ng-binding ng-scope"><%= error %></span></div>
+                    </div>
+                    <% } %>
+                    <% if (success) { %>
+                    <div class="center alert alert-success">
+                        <div><span class="ng-binding ng-scope"><%= success %></span></div>
+                    </div>
+                    <% } %>
+                    <div class="box-content">
+                        <form id="outoflineinfo" class="form-horizontal" role="form" action="versionUrlPost" method="post" enctype="multipart/form-data">
+                            <fieldset>
+                                <br />
+                                <div class="center col-md-8">
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red " >客户端版本：</i></span>
+                                        <input name="version" type="text" id="version" class="form-control "  placeholder="客户端版本"/>
+                                    </div><br />
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon" ><i class="glyphicon glyphicon-user red">URL：</i></span>
+                                        <input name="url"  id="url" type="text" class="form-control  " placeholder="版本升级URL"/>
+                                    </div><br />
+                                    <span class="input-group-addon" style="border:none;background-color:#FFFFFF"></span>
+                                    <input  type="button" id="findinfo"  style="border:none;background-color:#2FA4E7;width:112px;height:38px " class="form-control col-md-2 " value="提 交" />
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="application/javascript">
+    $("#findinfo").click(function () {
+        var data = {};
+        data.version = $("#version").val();
+        data.url = $("#url").val();
+        $.post("/other/versionUrlPost", data, function (result) {
+            result = JSON.parse(result);
+            if(result.ok == true){
+                alert('配置成功！');
+                window.location.href = 'versionUrlGet';
+            }else{
+                alert('配置失败！');
+            }
+        });
+    });
+</script>
+

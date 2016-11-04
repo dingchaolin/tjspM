@@ -1,0 +1,86 @@
+<% include ../navigation %>
+
+<div class="ch-container">
+	<% include ../sidebar %>
+		<div id="content" class="col-lg-10 col-sm-10">
+	    	<div>
+		        <ul class="breadcrumb">
+		            <li><a href="/">主页</a></li>
+		            <li><a href="/region/regionadd">添加推广房间</a></li>
+		        </ul>
+		    </div>
+			<div class="row">
+			    <div class="box col-md-12">
+			        <div class="box-inner">
+			            <div class="box-header well" data-original-title="">
+			                <h2><i class="glyphicon glyphicon-edit"></i>添加推广房间</h2>
+			            </div>
+
+			            <div class="box-content">
+			                <form id="regioninfo" class="form-horizontal" role="form" action="qianYanAdd" method="post" enctype="multipart/form-data">
+		                        <fieldset>
+		                        	<br />
+		                        	<div class="center col-md-8" style="position: relative;;">
+										<div class="input-group input-group-md">
+										<span class="input-group-addon"><i class="glyphicon glyphicon-bookmark red"></i> 房间名称：</span>
+												<input type="text" class="c_chatroom_name form-control" id="c_chatroom_name" name="c_chatroom_name" >
+											</div><br />
+										<div class="suggest"  id="search-suggest" style="display:none; position: absolute; ;z-index: 10;border: 0; left:129px; top:34px; text-align:left;">
+											<ul class="search_results" id="search_results">	</ul >
+										</div>
+										<input type="hidden" name="c_hash" id="c_hash">
+			                            <div class="input-group input-group-md">
+			                                <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark red"></i> 是否推广：</span>
+			                                <select id="status" name="status" class="form-control">
+											  <option value="0" selected="selected">推广</option>
+											  <option value="1">不推广</option>
+											</select>
+			                            </div><br />
+			                            <p class="center col-md-5">
+			                                <input type="submit" class="btn btn-md btn-primary" id='subAjax' value="提 交" />
+			                            </p>
+
+			                        </div>
+		                        </fieldset>
+			                </form>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>
+<script style="javascript/text" >
+	$('#c_chatroom_name').bind('keyup',function() {
+		var jqueryInput = $(this);
+		var searchText = jqueryInput.val();
+		var html = "";
+		$.get('/qianyan/queryFactory?k=' + searchText, function (result) {
+			console.log(result.queryList[1]);
+			if(!!result){
+				for(var i =0 ; i < result.queryList.length;i++){
+					html +='<li class="liList" value="'+result.queryList[i].c_hash+'">'+result.queryList[i].c_chatroom_name+'</li>'
+				}
+				$('#search_results').html(html);
+				$('#search-suggest').show();
+			}
+		})
+	})
+	$(document).delegate('.liList','click',function(){
+		a = $(this).text();
+		c_hash =  $(this).attr("value");
+		$('#c_chatroom_name').val(a);
+		$('#c_hash').val(c_hash);
+	})
+	$(document).on('click', function(){
+		$('#search-suggest').hide();
+	})
+	$("#subAjax").click(function(){
+		if($('.search_results li').attr("value")){
+			return true;
+		}else {
+			alert('没有此房间，请重新输入');
+			return false;
+		}
+	});
+</script>

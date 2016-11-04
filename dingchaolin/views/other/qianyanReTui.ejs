@@ -1,0 +1,84 @@
+<% include ../navigation %>
+<div class="ch-container">
+    <% include ../sidebar %>
+    <div id="content" class="col-lg-10 col-sm-10">
+        <div>
+            <ul class="breadcrumb">
+                <li><a href="/">主页</a></li>
+                <li><a href="#">钱眼热推</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="box col-md-12">
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2><i class="glyphicon glyphicon-edit"></i>钱眼热推</h2>
+                    </div>
+                    <% if (error) { %>
+                    <div class="center alert alert-danger">
+                        <div><span class="ng-binding ng-scope"><%= error %></span></div>
+                    </div>
+                    <% } %>
+                    <% if (success) { %>
+                    <div class="center alert alert-success">
+                        <div><span class="ng-binding ng-scope"><%= success %></span></div>
+                    </div>
+                    <% } %>
+                    <div class="box-content">
+                        <!--<form id="userinfo" class="form-horizontal" role="form" action="#" method="post" enctype="multipart/form-data">-->
+                        <fieldset>
+                            <br />
+                            <p class=" center col-md-12" style="color: red">
+                              PS：提交两分钟以后生效！！！
+                            </p>
+                            <div class="center col-md-8">
+                                <div class="input-group input-group-md">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i> 屏蔽关键词</span>
+                                    <textarea title="屏蔽关键词" id="relayText" name="r_text" class="form-control content relayText"><%=result%></textarea>
+                                </div><br />
+                                <p class="center col-md-5">
+                                    <input type="button" id="zj_add_submit" class="btn btn-md btn-primary" value="提 交" />
+                                </p>
+                            </div>
+                        </fieldset>
+                        <!--</form>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<style type="text/css">
+    .relayText{
+        height: 316px !important;
+    }
+</style>
+<script type="text/javascript">
+    $('#zj_add_submit').click(function(){
+        var c_forward=$('#c_forward').val();
+        var relayText=$('#relayText').val().trim();
+        console.log(typeof relayText);
+
+        //房间数量验证
+        relayText = relayText.split(/[，,]/g);
+
+        if(relayText.length > 10){
+            return alert("不能大于10个房间！！！");
+        }
+
+        var re=/[，,]/g;
+        var data={};
+        data.value = relayText.toString();
+        console.log('提交参数+%j'+data.value);
+            $.post("/other/qianYanBlockword", data, function(result){
+                if('ok'== result.result){
+                    alert('更新成功');
+                    window.location.reload();
+                }else{
+                    alert('更新失败');
+                }
+            });
+        return false;
+    });
+</script>

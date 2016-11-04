@@ -1,0 +1,73 @@
+<% include ../navigation %>
+<div class="ch-container">
+    <% include ../sidebar %>
+    <div id="content" class="col-lg-10 col-sm-10">
+        <div>
+            <ul class="breadcrumb">
+                <li><a href="/">主页</a></li>
+                <li><a href="#">添加违规信息</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="box col-md-12">
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2><i class="glyphicon glyphicon-edit"></i>添加违规信息</h2>
+                    </div>
+                    <% if (error) { %>
+                    <div class="center alert alert-danger">
+                        <div><span class="ng-binding ng-scope"><%= error %></span></div>
+                    </div>
+                    <% } %>
+                    <% if (success) { %>
+                    <div class="center alert alert-success">
+                        <div><span class="ng-binding ng-scope"><%= success %></span></div>
+                    </div>
+                    <% } %>
+                    <div class="box-content">
+                        <form id="outoflineinfo" class="form-horizontal" role="form" action="add" method="post" enctype="multipart/form-data">
+                            <fieldset>
+                                <br />
+                                <div class="center col-md-8">
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i> 主播/房间</span>
+                                        <input id="c_name" name="c_name" type="text" value="" class="form-control" placeholder="主播/房间">
+                                    </div><br />
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark red"></i> 类型</span>
+                                        <select id=c_nikenameType" name="c_nikenameType" class="form-control">
+                                            <option value="主播" selected="selected">主播</option>
+                                            <option value="房间">房间</option>
+                                        </select>
+                                    </div><br />
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark red"></i> 违规行为</span>
+                                        <select id="c_action" name="c_action" class="form-control">
+                                        <option value="违规言论" selected="selected">违规言论</option>
+                                        <option value="发布违规信息">发布违规信息</option>
+                                        <option value="疑是反动言论">疑是反动言论</option>
+                                        </select>
+                                    </div><br />
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark red"></i> 处罚类型</span>
+                                        <select id="c_deal" name="c_deal" class="form-control">
+                                            <option value="停播整治48小时" selected="selected">停播整治48小时</option>
+                                            <option value="停播整治72小时">停播整治72小时</option>
+                                            <option value="冻结账号60天">冻结账号60天</option>
+                                            <option value="冻结账号90天">冻结账号90天</option>
+                                            <option value="房间永久收回">房间永久收回</option>
+                                        </select>
+                                    </div><br />
+                                    <p class="center col-md-5">
+                                        <input type="submit" class="btn btn-md btn-primary" value="提 交" />
+                                    </p>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,141 @@
+<div class="row">
+    <div class="col-sm-2 col-lg-2">
+        <div class="sidebar-nav">
+            <div class="nav-canvas">
+                <% if (usertype == '1' || usertype == '2' || usertype == '3'|| usertype == '4') {%>
+                <ul class="nav nav-pills nav-stacked main-menu">
+                    <li class="accordion">
+                        <a><i class="glyphicon glyphicon-plus"></i><span> 房间管理</span></a>
+                        <ul class="nav nav-pills nav-stacked">
+
+                            <% if (usertype == '1' || usertype == '2' || usertype == '3'|| usertype == '4') {%>
+                                <li><a href="/room/auditpaylist">付费审核</a></li>
+                                <li><a href="/room/auditlist">免费审核</a></li>
+                                <li><a href="/room/passedlist">通过审核列表</a></li>
+                            <% } %>
+                            <% if (usertype == '1' || usertype == '3' || usertype == '2') {%>
+                                <li><a href="/room/index">房间列表</a></li>
+                                <li><a href="/room/owner">讲师结算</a></li>
+                                <li><a href="/room/setroomindex">房间设置</a></li>
+                                <li><a href="/room/relayRooms">批量转播</a></li>
+                                <li><a href="/room/roomliftban">禁用 IP</a></li>
+                            <% } %>
+                        </ul>
+                    </li>
+                </ul>
+                <% } %>
+                <% if (usertype == '1' || usertype == '2' || usertype == '3' || usertype == '4' ) {%>
+                <ul class="nav nav-pills nav-stacked main-menu">
+                    <li class="accordion">
+                        <a><i class="glyphicon glyphicon-plus"></i><span> 大区管理</span></a>
+                        <ul class="nav nav-pills nav-stacked">
+
+                            <% if (usertype == '1' || usertype == '2' || usertype == '3' || usertype == '4' ) {%>
+                                <li><a href="/region/auditlist">审核列表</a></li>
+                            <% } %>
+
+                            <% if (usertype == '1' || usertype == '3'|| usertype == '2') {%>
+                                <li><a href="/region/regionlist">大区列表</a></li>
+                                <li><a href="/region/regionOpenList">大区状态</a></li>
+                                <!--<li><a href="/broadcast/history">广播历史</a></li>-->
+                                <li><a href="/broadcast/record">广播记录</a></li>
+                                <li><a href="/region/roomchange">大区转换</a></li>
+                            <% } %>
+
+                        </ul>
+                    </li>
+                </ul>
+                <% } %>
+                <% if (usertype == '1'|| usertype == '2'|| usertype == '3') {%>
+                <ul class="nav nav-pills nav-stacked main-menu">
+                    <li class="accordion">
+                        <a><i class="glyphicon glyphicon-plus"></i><span> 用户管理</span></a>
+                        <ul class="nav nav-pills nav-stacked">
+
+                            <% if (usertype == '1') {%>
+                                <li><a href="/adminuser/userindex">用户列表</a></li>
+                            <% } %>
+                            <% if (usertype == '1' || usertype == '3' ||  usertype == '2') {%>
+                                <li><a href="/adminuser/userlock">用户锁定</a></li>
+                            <% } %>
+                            <!--积分体系相关-->
+                            <li><a href="/adminuser/user_scoredetail">积分明细</a></li>
+                            <li><a href="/adminuser/user_scoregrant">积分兑换</a></li>
+                            <!--成长体系相关-->
+                            <li><a href="/adminuser/growthLevel">用户等级查询</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+                <%}%>
+                <% if (usertype == '1' || usertype == '2'|| usertype == '5') {%>
+                <ul class="nav nav-pills nav-stacked main-menu">
+                    <li class="accordion">
+                        <a><i class="glyphicon glyphicon-plus"></i><span> SEM</span></a>
+                        <ul class="nav nav-pills nav-stacked">
+
+                                <li><a href="/room/seolist"> 房间列表</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+                <% } %>
+                <ul class="nav nav-pills nav-stacked main-menu">
+                    <li class="accordion">
+                        <a><i class="glyphicon glyphicon-plus"></i><span> 平台管理</span></a>
+                        <ul class="nav nav-pills nav-stacked">
+                            <% if (usertype == '1' || usertype == '2') {%>
+                                <li><a href="/broadcast/getfms"> 平台广播</a></li>
+                                <li><a href="/platform/GetAdInfo">平台广告</a></li>
+                            <% } %>
+                            <% if (usertype == '1' || usertype == '2'|| usertype == '4') {%>
+                                <!--<li><a href="/platform/GetGiftStatistics">房间礼包统计</a></li>-->
+                                <li><a href="/platform/GetGiftInfo">平台礼包</a></li>
+                                <li><a href="/platform/GetGiftOfficial">礼包统计</a></li>
+                            <% } %>
+                                <% if (usertype == '1' || usertype == '2' || usertype == '5') {%>
+                                     <li><a href="/platform/indexGet">营销 QQ</a></li>
+                                <% } %>
+                            <% if (usertype == '1' || usertype == '2' || usertype == '3') {%>
+                                <li><a href="/platform/chatInfoDel">聊天历史</a></li>
+                                <li><a href="/qianyan/indexGet">钱眼推广</a></li>
+                                <li><a href="/platform/CountUser">用户登陆版本统计</a></li>
+                                <li><a href="/platform/clientCountUser">客户端首页统计</a></li>
+                                <li><a href="/other/kickUserListGET">踢出用户列表</a></li>
+                            <% }%>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav nav-pills nav-stacked main-menu">
+                    <li class="accordion">
+                        <a><i class="glyphicon glyphicon-plus"></i><span> 积分管理</span></a>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="/Score/awardlist"> 奖品列表</a></li>
+                            <li><a href="/Score/awardrecord"> 奖品录入</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav nav-pills nav-stacked main-menu">
+                    <li class="accordion">
+                        <a><i class="glyphicon glyphicon-plus"></i><span> 其他管理</span></a>
+                        <ul class="nav nav-pills nav-stacked">
+                            <% if (usertype == '1' || usertype == '3'|| usertype == '2' ) {%>
+                            <li><a href="/platform/roomVerifyList"> 房间受限管理</a></li>
+                            <li><a href="/other/blockwordQuery"> 屏蔽词管理</a></li>
+                            <li><a href="/other/feedbackQueryGet"> 意见反馈管理</a></li>
+                            <li><a href="/other/GetOutoflineDeal"> 违规处理</a></li>
+                            <% } %>
+                            <% if (usertype == '1' || usertype == '3'|| usertype == '2'|| usertype == '5' ) {%>
+                            <li><a href="/other/qianYanBlockwordQuery"> 钱眼热推</a></li>
+                            <li><a href="/other/versionUrlGet"> 版本URL配置列表</a></li>
+                            <li><a href="/other/getinfoCountGet"> getinfo统计</a></li>
+                            <li><a href="/other/yczsGet"> 银创直属</a></li>
+                            <% } %>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>

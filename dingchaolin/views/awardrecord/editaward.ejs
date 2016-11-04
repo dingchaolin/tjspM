@@ -1,0 +1,390 @@
+<% include ../navigation %>
+<div class="ch-container">
+    <% include ../sidebar %>
+    <div id="content" class="col-lg-10 col-sm-10">
+        <div>
+            <ul class="breadcrumb">
+                <li><a href="/">主页</a></li>
+                <li><a href="/Score/editaward">奖品编辑</a></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="box col-md-12">
+                <div class="box-inner">
+                    <div class="box-header well" data-original-title="">
+                        <h2><i class="glyphicon glyphicon-edit"></i>奖品编辑</h2>
+                    </div>
+
+                    <div class="box-content">
+                        <form id="adinfo" class="form-horizontal" role="form" action="#" method="post"
+                              enctype="multipart/form-data">
+                            <input id="c_hash" name="c_hash" type="hidden"/>
+                            <fieldset>
+                                <br/>
+                                <div class="center col-md-8">
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i> 奖品名称</span>
+                                        <input id="awardname" name="awardname" type="text" class="form-control" placeholder="请输入奖品名称" value="<%=awardinfo.name%>">
+                                    </div>
+                                    <br/>
+
+
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i> 需积分量</span>
+                                        <input id="awardscore" name="awardscore" type="text" class="form-control" placeholder="请输入所需积分量" value="<%=awardinfo.score%>">
+                                    </div>
+                                    <br/>
+
+
+                                    <div class="input-group input-group-md ">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark red"></i> 奖品描述</span>
+                                        <!--<input id="c_ad_context" name="c_ad_context" type="text" class="form-control" >-->
+                                        <textarea type="text" id="awarddesc" name="awarddesc" class="form-control " placeholder="请输入奖品描述,60字以内" ><%=awardinfo.desc%></textarea>
+                                    </div>
+                                    <br/>
+
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i> 原奖品码</span>
+                                        <!--<input id="c_skip_url" name="c_skip_url" type="text" class="form-control">-->
+                                        <textarea title="奖品码" readonly="readonly" id="awardcode" name="awardcode" class="form-control content " style="height:100px" placeholder="无"><%=awardinfo.code%></textarea>
+                                    </div>
+                                    <br/>
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i> 增删选项</span>
+                                        <select id="awardopr" name="awardopr" class="form-control" onchange="selectChange(this.value,this.options[this.selectedIndex].text)">
+                                            <option value="0" selected = "selected"> 无 </option>
+                                            <option value="1">增加 </option>
+                                            <option value="2">删除</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i> 增删奖品码</span>
+                                        <!--<input id="c_skip_url" name="c_skip_url" type="text" class="form-control">-->
+                                        <textarea title="奖品码"  readonly="readonly" id="editawardcode" name="editawardcode" class="form-control content " style="height:100px" placeholder="请输入奖品码，用,隔开"></textarea>
+                                    </div>
+                                    <br/>
+
+                                    <div class="input-group input-group-md">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i> 上传图片</span>
+                                        <input id="c_ad_url" name="c_ad_url" type="text" readonly="readonly"
+                                               class="form-control c_ad_url" value="<%=awardinfo.picurl%>">
+
+                                        <div id="flashContent">
+                                            <p>
+                                                To view this page ensure that Adobe Flash Player version
+                                                11.4.0 or greater is installed.
+                                            </p>
+                                            <script type="text/javascript">
+                                                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://");
+                                                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='"
+                                                        + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>");
+                                            </script>
+                                        </div>
+                                        <noscript>
+                                            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%"
+                                                    height="100%" id="ImageUpload" name="{application}">
+                                                <param name="movie" value="../ad/ImageUpload.swf"/>
+                                                <param name="quality" value="high"/>
+                                                <param name="bgcolor" value="#ffffff"/>
+                                                <param name="allowScriptAccess" value="sameDomain"/>
+                                                <param name="allowFullScreen" value="true"/>
+                                                <!--[if !IE]>-->
+                                                <object type="application/x-shockwave-flash"
+                                                        data="../ad/ImageUpload.swf" width="100%" height="100%"
+                                                        id="ImageUpload" name="{application}">
+                                                    <param name="quality" value="high"/>
+                                                    <param name="bgcolor" value="#ffffff"/>
+                                                    <param name="allowScriptAccess" value="sameDomain"/>
+                                                    <param name="allowFullScreen" value="true"/>
+                                                    <!--<![endif]-->
+                                                    <!--[if gte IE 6]>-->
+                                                    <p>
+                                                        Either scripts and active content are not permitted to run or
+                                                        Adobe Flash Player version
+                                                        11.4.0 or greater is not installed.
+                                                    </p>
+                                                    <!--<![endif]-->
+                                                    <a href="http://www.adobe.com/go/getflashplayer">
+                                                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif"
+                                                             alt="Get Adobe Flash Player"/>
+                                                    </a>
+                                                    <!--[if !IE]>-->
+                                                </object>
+                                                <!--<![endif]-->
+                                            </object>
+                                        </noscript>
+                                        <!--<a href="#" id="clear_ad">刷新</a>-->
+                                    </div>
+                                    <br/>
+
+                                    <!--  <div class="input-group input-group-md">
+                                          <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark red"></i> 启用状态</span>
+                                          <select id="c_ad_status" name="c_ad_status" class="form-control">
+                                              <option value="1" selected="selected">开启</option>
+                                              <option value="2">不开启</option>
+                                          </select>
+                                      </div>-->
+                                    <br/>
+
+                                    <p class="center col-md-5">
+                                        <input type="button" id="add_button" class="btn btn-md btn-primary"
+                                               value="提 交"/>
+                                    </p>
+                                </div>
+                            </fieldset>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<style type="text/css" media="screen">
+    .c_ad_url {
+        width: 83% !important;
+    }
+</style>
+<script type="text/javascript">
+    var swfVersionStr = "11.4.0";
+    var xiSwfUrlStr = "playerProductInstall.swf";
+    var flashvars = {};
+    var params = {};
+    params.quality = "high";
+    params.bgcolor = "#ffffff";
+    params.allowscriptaccess = "sameDomain";
+    params.allowfullscreen = "true";
+    var attributes = {};
+    attributes.id = "ImageUpload";
+    attributes.name = "ImageUpload";
+    attributes.align = "middle";
+    params.flashvars = "autoupload=false&img=background:../ad/button.png&keyurl=http://upimg.mfstatic.com/checkupfile?uid=*&uid=aaa&size=1&type=*.jpg,*.jpeg,*.gif,*.png&url=http://upimg.mfstatic.com/upload1&label=图片上传&labelcolor=0xff0000&w=100&h=30&callBack=onUploadError:onUploadError,onLog:onLog,onComp:onComp";
+    swfobject.embedSWF(
+            "../ad/ImageUpload.swf", "flashContent",
+            "100", "30",
+            swfVersionStr, xiSwfUrlStr,
+            flashvars, params, attributes);
+    swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+    /*******推送rtmp接口示例*******/
+    /**************************/
+    IS_CONSOLE_LOG = true;//是否打印日志信息
+    /*
+     Script 提供的回调接口,swf在请求数据过程中会产生以下几种状态
+     1、onInit 上传组件初始化完成
+     2、onCUpload 当前正在进行图片上传
+     3、onSelect 选中上传文件
+     4、onIoError 上传IO错误
+     5、onSecurityError 上次策略文件错误
+     6、onProgress 文件上传进度
+     7、onLog 调试函数
+     8、onComp 图片上传完毕
+     9、onError 上传过程中引起的其他错误
+     10、onFileSize 当选择的文件大小超过设定的大小时执行该回调
+     11、onInvalidFile 当选择无效文件时候回调该函数
+     12、onUploadError 文件上传失败
+     13、startUpload 当设置为不自动上传时，通过调用该函数开始上传文件
+     14、noSelected 当设置为不自动上传文件时，没有选择文件或者传递网络地址就调用startUpload函数时候返回的错误
+     15、cancelFileState 取消标识的文件状态，可以用于继续上传文件
+     以下为swf回调示例
+     */
+    //    function onInit(value, objectID) {
+    //        $("#clear_ad").hide();
+    //    }
+    function onCUpload(value, objectID) {
+        console.log("function onCUpload " + value);
+        onLog(value, objectID);
+    }
+    //    function onSelect(value, objectID) {
+    //        $('#c_ad_url').val(value);
+    //        $("#clear_ad").show();
+    //    }
+    function onIoError(value, objectID) {
+        console.log("function onIoError " + value);
+        onLog(value, objectID);
+    }
+    function onSecurityError(value, objectID) {
+        console.log("function onSecurityError " + value);
+
+        onLog(value, objectID);
+    }
+    function onError(value, objectID) {
+        console.log("function onError " + value);
+
+        onLog(value, objectID);
+    }
+    function onProgress(value, objectID) {
+        console.log("function onProgress " + value);
+
+        onLog(value, objectID);
+    }
+    function onLog(value, objectID) {
+        // alert(value + ":" + objectID);
+        // message = decodeURIComponent(message);
+        var log = "log " + objectID + " " + value;
+        if (IS_CONSOLE_LOG) console.log(log);
+    }
+
+    function onComp(value, objectID) {
+        console.log("function onComp " + value);
+        var top=value.indexOf('_');
+        var end = value.substring(top+1);
+        $('#c_ad_url').val(value+'0_123x123_p.'+end);
+    }
+
+    function onFileSize(value, objectID) {
+        // alert(value);
+        console.log("function onFileSize " + value);
+
+        onLog(value, objectID);
+    }
+
+    function onInvalidFile(value, objectID) {
+        console.log("function onInvalidFile " + value);
+
+        onLog(value, objectID);
+    }
+
+    function onUploadError(value, objectID) {
+        console.log("function onUploadError " + value);
+
+        onLog(value, objectID);
+    }
+
+    /*Script 提供的回调接口*/
+
+    ////////////////////////////////////////////////////////
+    /**flash 对外提供的交互接口*/
+    /*
+     1、__netUpload 上传网络图片
+     */
+
+    /*getSwf  获取swf对象*/
+    function getSwf() {
+        return document.ImageUpload;
+    }
+    // 上传网络图片
+    function netUpload() {
+        var netSrc = text.value;
+        // var width = text1.value;
+        // var height = text2.value;
+        getSwf().__netUpload(netSrc);
+        // getSwf().__netUpload(netSrc, width, height);
+    }
+
+    function netUpload2() {
+        var netSrc = text2.value;
+        // var width = text1.value;
+        // var height = text2.value;
+        getSwf().__netUpload(netSrc);
+        // getSwf().__netUpload(netSrc, width, height);
+    }
+
+    function startUpload(ad_info) {
+        getSwf().startUpload()
+    }
+
+    function cancelFileState() {
+        getSwf().cancelFileState();
+        $('#c_ad_url').val('');
+        $("#clear_ad").hide();
+    }
+
+    function noSelected(value, objectID) {
+        onLog(value, objectID, 'noSelected');
+    }
+
+    $("#clear_ad").click(cancelFileState);
+    /**
+     * 提交页面信息
+     ***/
+    var selectIndex = 0;
+    function selectChange( value, text ){
+        selectIndex = value;
+        if( value != 0 ){
+            //$("#editawardcode").readonly = false;
+            document.getElementById("editawardcode").readOnly=false;
+        }else{
+
+            //$("#editawardcode").readonly = true;
+            var obj = document.getElementById("editawardcode");
+            obj.setAttribute("readOnly",true);
+
+        }
+    }
+
+    $("#add_button").click(function(){
+        var type = '<%=awardinfo.type%>';
+        if( !type ){
+            alert("参数:type丢失！");
+            return;
+        }
+        //alert( type );
+        var oprtype = selectIndex;
+        var awardname = $("#awardname").val();
+        //alert( awardname );
+        var awardscore = $("#awardscore").val();
+        var awarddesc = $("#awarddesc").val();
+        //alert( awarddesc );
+        var awardcode = "";
+        if( oprtype == 0 ){
+            awardcode = $("#awardcode").val();
+            awardcode = awardcode.replace(/[\n' ']/ig,'');//去掉回车换行符
+            awardcode = awardcode.replace(/(^\s*)|(\s*$)/g,'');//去掉空格字符
+
+        }else{
+            awardcode = $("#editawardcode").val();
+            awardcode = awardcode.replace(/[\n' ']/ig,'');//去掉回车换行符
+            awardcode = awardcode.replace(/(^\s*)|(\s*$)/g,'');//去掉空格字符
+        }
+        if (!awardname) {
+            alert("奖品名称为空！");
+            return;
+        }
+        if (!awardscore) {
+            alert("所需积分量为空！");
+            return;
+        }
+        var reg = /^[0-9]\d*$/i;
+        if (!!awardscore && !reg.exec(awardscore)) {
+            alert("所需积分量为数字！");
+            return;
+        }
+        var awardurl = $("#c_ad_url").val();
+        //alert( awardurl );
+
+        var data = {};
+        data.name = awardname;
+        data.scoreneed = awardscore;
+        data.desc = awarddesc;
+        data.code = awardcode;
+        data.type = type;
+        data.picurl = awardurl;
+        data.oprtype = oprtype;
+        //alert( awardurl );
+        //alert( JSON.stringify( data ) );
+        //return;
+        //var str = "奖品名称:" + awardname + "所需积分:" + awardscore + "奖品描述：" + awarddesc + "奖品码:" + awardcode + "奖品类型:" + type + "奖品URL:" +  awardurl;
+        //alert(str);
+        //addAward
+        $.post("/Score/saveEditAward", data, function(AddResult){
+            //alert( AddResult );
+            //alert( typeof AddResult );
+            var addres = JSON.parse( AddResult );
+            if( addres.status == 1 ){
+                alert("编辑奖品成功！");
+                window.location.href='/Score/awardlist';
+            }else{
+                alert("编辑奖品失败！");
+            }
+        });
+
+
+        //#####################################################
+
+
+        //return false;
+    })
+</script>

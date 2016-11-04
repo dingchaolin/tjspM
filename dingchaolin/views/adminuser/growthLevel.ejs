@@ -1,0 +1,171 @@
+<%include ../navigation%>
+<div class="ch-container">
+    <% include ../sidebar%>
+    <div id="content" class="col-lg-10 col-sm-10">
+        <div>
+            <ul class="breadcrumb">
+                <li><a href="/">主页</a></li>
+                <li><a href="/adminuser/growthLevel">用户等级查询</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="content" class="col-lg-6 col-sm-6">
+        <div class="input-group input-group-md">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
+            <input name="userID" type="text" id="userID" class="form-control "  placeholder="用户ID"/>
+            <span class="input-group-addon" ><i class="glyphicon glyphicon-user red"></i></span>
+            <input name="usernick"  id="usernick" type="text" class="form-control " placeholder="用户昵称"/>
+            <span class="input-group-addon" style="border:none;background-color:#FFFFFF"></span>
+            <input type="button" id="findinfo"  style="border:none;background-color:#2FA4E7;width:112px;height:38px" class="form-control " value="查 询" />
+        </div>
+    </div>
+    <div id="content" class="col-lg-6 col-sm-6" >
+    <span style="height:15px">&nbsp;</span>
+    </div>
+
+    <div id="content" class="col-lg-6 col-sm-6" >
+        <span style="height:5px">&nbsp;</span>
+    </div>
+    <div id="content" class="col-lg-10 col-sm-10">
+        <div class="row">
+            <div class="box col-md-12">
+                <div class="box-inner">
+                    <div class="box-header well" style='padding-top:0'>
+                        <h2 style='margin-top:5px;'><i class="glyphicon glyphicon-user"> 查询结果</i></h2>
+                    </div>
+                    <div class="box-content">
+                        <table id="roomlist" class="table table-striped table-bordered table-hover bootstrap-datatable responsive">
+                            <thead>
+                            <tr>
+                                <th>用户ID</th>
+                                <th>用户昵称</th>
+                                <th>当前用户等级</th>
+                            </tr>
+                            </thead>
+                            <tbody id="listbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var findInfo = function(){
+        var data={};
+        var userID = $("#userID").val();
+        var username = $("#usernick").val();
+        var data={};
+        var reg = /^[0-9]\d*$/i;
+        if( !!userID && !reg.exec(userID) ){
+            alert("用户ID全部为数字！");
+            return;
+        }
+        if( !!userID ){
+            data.type = 1;
+            data.uid = userID;
+        }else if(!!username){
+            data.type = 2;
+            data.nickname = username;
+        }else {
+            alert("用户ID，用户昵称至少有一个不能为空！");
+            return;
+        }
+        $.post("/adminuser/user_growthLevel", data, function(result){
+            if( result.info.status == 1 ){
+                var str = '';
+                str=str+'<tr id="'+result.info.uid+'">';
+                str=str+'<td class="col-md-1">'+(result.info.uid ) +'</td>';
+                str=str+'  <td class="col-md-1">'+(result.info.username ) +'</td>';
+                str=str+' <td class="col-md-1">'+(result.info.level ) +'</td>';
+                str=str+'</tr>';
+                $("#listbody").empty().append(str);
+            }
+            else{
+                if( 1 == data.type ){
+                    var str = '';
+                    str=str+'<tr id="'+userID+'">';
+                    str=str+'<td class="col-md-1">'+( userID ) +'</td>';
+                    str=str+'  <td class="col-md-1">'+ " " +'</td>';
+                    str=str+' <td class="col-md-1">'+ 1 +'</td>';
+                    str=str+'</tr>';
+                    $("#listbody").empty().append(str);
+                }else{
+                    var str = '';
+                    str=str+'<tr class="'+username+'">';
+                    str=str+'<td class="col-md-1">'+ " "  +'</td>';
+                    str=str+'  <td class="col-md-1">'+ username +'</td>';
+                    str=str+' <td class="col-md-1">'+ 1 +'</td>';
+                    str=str+'</tr>';
+                    $("#listbody").empty().append(str);
+                }
+            }
+
+        });
+
+    }
+    document.onkeydown = function(e){
+        if((e||event).keyCode==13){
+            findInfo();
+        }
+    };
+    window.onload = function(){
+        $("#findinfo").click( function(){
+            var data={};
+            var userID = $("#userID").val();
+            var username = $("#usernick").val();
+            var data={};
+            var reg = /^[0-9]\d*$/i;
+            if( !!userID && !reg.exec(userID) ){
+                alert("用户ID全部为数字！");
+                return;
+            }
+            if( !!userID ){
+                data.type = 1;
+                data.uid = userID;
+            }else if(!!username){
+                data.type = 2;
+                data.nickname = username;
+            }else {
+                alert("用户ID，用户昵称至少有一个不能为空！");
+                return;
+            }
+            $.post("/adminuser/user_growthLevel", data, function(result){
+                if( result.info.status == 1 ){
+                    var str = '';
+                    str=str+'<tr id="'+result.info.uid+'">';
+                    str=str+'<td class="col-md-1">'+(result.info.uid ) +'</td>';
+                    str=str+'  <td class="col-md-1">'+(result.info.username ) +'</td>';
+                    str=str+' <td class="col-md-1">'+(result.info.level ) +'</td>';
+                    str=str+'</tr>';
+                    $("#listbody").empty().append(str);
+                }
+                else{
+                    if( 1 == data.type ){
+                        var str = '';
+                        str=str+'<tr id="'+userID+'">';
+                        str=str+'<td class="col-md-1">'+( userID ) +'</td>';
+                        str=str+'  <td class="col-md-1">'+ " " +'</td>';
+                        str=str+' <td class="col-md-1">'+ 1 +'</td>';
+                        str=str+'</tr>';
+                        $("#listbody").empty().append(str);
+                    }else{
+                        var str = '';
+                        str=str+'<tr class="'+username+'">';
+                        str=str+'<td class="col-md-1">'+ " "  +'</td>';
+                        str=str+'  <td class="col-md-1">'+ username +'</td>';
+                        str=str+' <td class="col-md-1">'+ 1 +'</td>';
+                        str=str+'</tr>';
+                        $("#listbody").empty().append(str);
+                    }
+                }
+
+            });
+
+        } );
+    }
+
+</script>

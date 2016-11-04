@@ -1,0 +1,154 @@
+<%include ../navigation%>
+<div class="ch-container">
+    <% include ../sidebar%>
+    <div id="content" class="col-lg-10 col-sm-10">
+        <div>
+            <ul class="breadcrumb">
+                <li><a href="/">主页</a></li>
+                <li><a href="/Score/awardrecord">奖品录入</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="content" class="col-md-8">
+        <div class="input-group input-group-md">
+            <span class="input-group-addon">奖品名称 </span>
+            <input name="awardname" type="text" id="awardname" class="form-control "  placeholder="请输入奖品名称"/>
+        </div>
+        <br>
+        <div class="input-group input-group-md">
+            <span class="input-group-addon" >需积分量</span>
+            <input name="awardscore"  id="awardscore" type="text" class="form-control " placeholder="请输入所需积分量"/>
+        </div>
+        <br>
+        <div class="input-group input-group-md">
+            <span class="input-group-addon" >奖品描述</span>
+            <textarea title="奖品描述" id="awarddesc" name="awarddesc" class="form-control content " placeholder="请输入奖品描述,60字以内"></textarea>
+        </div>
+        <br>
+        <div class="input-group input-group-md">
+            <span class="input-group-addon">奖品码</span>
+            <textarea title="奖品码" id="awardcode" name="awardcode" class="form-control content " style="height:100px" placeholder="请输入奖品码，用,隔开,结束"></textarea>
+        </div>
+        <div class="input-group input-group-md">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i> 上传广告</span>
+            <input id="c_ad_url" name="c_ad_url" type="text" readonly="readonly"
+                   class="form-control c_ad_url">
+
+            <div id="flashContent">
+                <p>
+                    To view this page ensure that Adobe Flash Player version
+                    11.4.0 or greater is installed.
+                </p>
+                <script type="text/javascript">
+                    var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://");
+                    document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='"
+                            + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>");
+                </script>
+            </div>
+            <noscript>
+                <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%"
+                        height="100%" id="ImageUpload" name="{application}">
+                    <param name="movie" value="../ad/ImageUpload.swf"/>
+                    <param name="quality" value="high"/>
+                    <param name="bgcolor" value="#ffffff"/>
+                    <param name="allowScriptAccess" value="sameDomain"/>
+                    <param name="allowFullScreen" value="true"/>
+                    <!--[if !IE]>-->
+                    <object type="application/x-shockwave-flash"
+                            data="../ad/ImageUpload.swf" width="100%" height="100%"
+                            id="ImageUpload" name="{application}">
+                        <param name="quality" value="high"/>
+                        <param name="bgcolor" value="#ffffff"/>
+                        <param name="allowScriptAccess" value="sameDomain"/>
+                        <param name="allowFullScreen" value="true"/>
+                        <!--<![endif]-->
+                        <!--[if gte IE 6]>-->
+                        <p>
+                            Either scripts and active content are not permitted to run or
+                            Adobe Flash Player version
+                            11.4.0 or greater is not installed.
+                        </p>
+                        <!--<![endif]-->
+                        <a href="http://www.adobe.com/go/getflashplayer">
+                            <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif"
+                                 alt="Get Adobe Flash Player"/>
+                        </a>
+                        <!--[if !IE]>-->
+                    </object>
+                    <!--<![endif]-->
+                </object>
+            </noscript>
+            <!--<a href="#" id="clear_ad">刷新</a>-->
+        </div>
+        <br>
+        <div class="input-group input-group-md">
+            <input type="button" id="buttonupload"  style="border:none;background-color:#2FA4E7;width:112px;height:38px" class="form-control " value="上 传" />
+        </div>
+        <div class="input-group input-group-md">
+            <input type="button" id="button_ok"  style="border:none;background-color:#2FA4E7;width:112px;height:38px" class="form-control " value="确 定" />
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+
+
+    window.onload = function(){
+
+
+        $("#button_ok").click( function() {
+            alert("确定...");
+            var awardname = $("#awardname").val();
+            var awardscore = $("#awardscore").val();
+            var awarddesc = $("#awarddesc").val();
+            var awardcode = $("#awardcode").val();
+            if (!awardname) {
+                alert("奖品名称为空！");
+                return;
+            }
+            if (!awardscore) {
+                alert("所需积分量为空！");
+                return;
+            }
+            var reg = /^[0-9]\d*$/i;
+            if (!!awardscore && !reg.exec(awardscore)) {
+                alert("所需积分量为数字！");
+                return;
+            }
+            //###############################
+            //奖品图片上传url
+            var awardurl = "待开发...";
+            //###############################
+
+            //获取奖品类型
+
+            $.post("/Score/getAwardNewType", data, function(result){
+                console.log( result, typeof result ) ;
+                var res = JSON.parse( result );
+                alert( result );
+                if( res.status == 0 ){
+                    alert("获取奖品类型失败！");
+                    return;
+                }
+                var type = res.newtype;
+                var data = {};
+                data.awardname = awardname;
+                data.awardscore = awardscore;
+                data.awarddesc = awarddesc;
+                data.awardcode = awardcode;
+                data.awardtype = type;
+                data.awardurl = awardurl;
+                var str = "奖品名称:" + awardname + "所需积分:" + awardscore + "奖品描述：" + awarddesc + "奖品码:" + awardcode + "奖品类型:" + type + "奖品URL:" +  awardurl;
+                alert(str);
+
+            });
+
+        });
+
+    }
+
+
+</script>
